@@ -144,25 +144,41 @@ varlbmapmodule = {
 
 varappgatmapmodule = {
   motoappgw = {
-    resource_group_name = "motorg"
-    location = "canada central"
-    skuname = "Standard_v2"
-    skutier = "Standard_v2"
-    skucapacity = 2
-    gatewayipconfname = "my-gateway-ip-configuration"
-    frontendport = 80
+    resource_group_name   = "motorg"
+    location              = "canada central"
+    skuname               = "Standard_v2"
+    skutier               = "Standard_v2"
+    skucapacity           = 2
+    gatewayipconfname     = "my-gateway-ip-configuration"
+    frontendport          = 80
     cookie_based_affinity = "Disabled"
-    backendport = 80
-    protocol = "Http"
-    request_timeout = 60
-    path = "/path1/"
-    priority = 9
-    rule_type = "Basic"
-    vnetname = "motovnet"
-    subnetname = "motoappgatewaysubnet"
-    virtual_network_name = "motovnet"
-    pipforappgat = "publicipappgw"
-    allocation_method = "Static"
-    frontendport = 80
+    backendport           = 80
+    protocol              = "Http"
+    request_timeout       = 60
+    path                  = "/path1/"
+    priority              = 9
+    rule_type             = "Basic"
+    vnetname              = "motovnet"
+    subnetname            = "motoappgatewaysubnet"
+    virtual_network_name  = "motovnet"
+    pipforappgat          = "publicipappgw"
+    allocation_method     = "Static"
+    frontendport          = 80
+  }
+}
+
+varnsgmapmodule = {
+  motonsg = {
+    location                   = "canada central"
+    resource_group_name        = "motorg"
+    securityrulename           = "test123"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
   }
 }

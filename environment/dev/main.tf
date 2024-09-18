@@ -62,13 +62,19 @@ module "bastionmodule" {
 
 # Call Child module for Load Balancer
 module "lbmodule" {
-  source = "../../module/8_lb"
-  varlbmap =  var.varlbmapmodule
-  depends_on = [ module.bastionmodule ]
+  source     = "../../module/8_lb"
+  varlbmap   = var.varlbmapmodule
+  depends_on = [module.bastionmodule]
 }
 
 module "varappgatmap" {
   source       = "../../module/9_appgw"
   varappgatmap = var.varappgatmapmodule
   depends_on   = [module.subnetmodule]
+}
+
+module "nsgmodue" {
+  source     = "../../module/10_nsg"
+  varnsgmap  = var.varnsgmapmodule
+  depends_on = [module.rgmodule]
 }

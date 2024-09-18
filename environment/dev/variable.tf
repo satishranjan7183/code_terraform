@@ -40,3 +40,6 @@ variable "varlbmapmodule" {
 variable "varappgatmapmodule" {
   type = map(any)
 }
+variable "varnsgmapmodule" {
+  type = map(any)
+}
