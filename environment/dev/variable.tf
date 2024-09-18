@@ -1,6 +1,9 @@
 variable "varrgmapmodule" {
   type = map(any)
 }
+# variable "varrglocationmodule" {
+#   type = map(any)
+# }
 variable "varkvmapmodule" {
   type = map(any)
 }

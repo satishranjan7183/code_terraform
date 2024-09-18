@@ -1,6 +1,9 @@
 varrgmapmodule = {
   motorg = "canada central"
 }
+# varrglocationmodule = {
+#   location = "canada central"
+# }
 varkvmapmodule = {
   motokv = {
     location                    = "canada central"

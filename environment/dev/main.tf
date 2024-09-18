@@ -1,7 +1,8 @@
 # Call Child module for Resource Group 
 module "rgmodule" {
-  source   = "../../module/1_rg"
+  source = "../../module/1_rg"
   varrgmap = var.varrgmapmodule
+  # varrglocation = var.varrglocationmodule
 }
 
 # Call Child module for Key Vault 
