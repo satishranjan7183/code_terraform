@@ -21,6 +21,53 @@ parameters:
 variables:
  - group: workdirvg
 
+stages:
+  - stage: terraforminstallandinitdev
+    displayName: Terraform Installation and Initialization for Dev
+    jobs:
+      - job: terraforminstall
+        displayName: Terraform Install
+        steps:
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: 'latest'
+      - job: terraforminit
+        displayName: Terraform Initialization
+        dependsOn: terraforminstall
+        steps:
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(workdir)/${{parameters.environment}}'
+              backendServiceArm: 'satishranjanwindowshost'
+              backendAzureRmResourceGroupName: 'satishrg'
+              backendAzureRmStorageAccountName: 'satishranstorage'
+              backendAzureRmContainerName: 'satishcontainer'
+              backendAzureRmKey: 'terraform.tfstate'
+  - stage: terraforminstallandinitprod
+    displayName: Terraform Installation and Initialization for Prod
+    jobs:
+      - job: terraforminstall
+        displayName: Terraform Install
+        steps:
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: 'latest'
+      - job: terraforminit
+        displayName: Terraform Initialization
+        dependsOn: terraforminstall
+        steps:
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(workdir)/${{parameters.environment}}'
+              backendServiceArm: 'satishranjanwindowshost'
+              backendAzureRmResourceGroupName: 'satishrg'
+              backendAzureRmStorageAccountName: 'satishranstorage'
+              backendAzureRmContainerName: 'satishcontainer'
+              backendAzureRmKey: 'terraform.tfstate'
 # stages:
 #   - stage: terraforminstallandinit${{parameters.environment}}
 #     displayName: Terraform Installation and Initialization for ${{parameters.environment}}
