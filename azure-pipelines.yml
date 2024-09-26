@@ -39,7 +39,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
-              workingDirectory: '$(workdir)/${{parameters.environment}}'
+              workingDirectory: '$(workdir)/dev'
               backendServiceArm: 'satishranjanwindowshost'
               backendAzureRmResourceGroupName: 'satishrg'
               backendAzureRmStorageAccountName: 'satishranstorage'
@@ -62,7 +62,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
-              workingDirectory: '$(workdir)/${{parameters.environment}}'
+              workingDirectory: '$(workdir)/prod'
               backendServiceArm: 'satishranjanwindowshost'
               backendAzureRmResourceGroupName: 'satishrg'
               backendAzureRmStorageAccountName: 'satishranstorage'
