@@ -16,7 +16,7 @@ parameters:
       - prod 
 
 stages:
-  - stage: terraforminstallationandinitfordev
+  - stage: terraforminstallandinitfordev
     displayName: Terraform Installation and Initialization for Dev Environment
     jobs:
       - job: terraforminstalldev
@@ -38,8 +38,8 @@ stages:
               backendAzureRmStorageAccountName: 'satishranstorage'
               backendAzureRmContainerName: 'satishcontainer'
               backendAzureRmKey: 'terraform.tfstate'
-  - stage: terraformplanfordev
-    dependsOn: terraforminstallationandinitfordev
+  - stage: tfplanfordev
+    dependsOn: terraforminstallandinitfordev
     displayName: Terraform Plan
     jobs:
      - job: terraformplan
@@ -96,27 +96,27 @@ stages:
               backendAzureRmStorageAccountName: 'satishranstorage'
               backendAzureRmContainerName: 'satishcontainer'
               backendAzureRmKey: 'terraform.tfstate'
-  - stage: terraformplanfordev
-    dependsOn: terraforminstallationandinitfordev
-    displayName: Terraform Plan
-    jobs:
-     - job: terraformplan
-       displayName: Terraform plan
-       steps:
-          - task: TerraformTaskV4@4
-            inputs:
-              provider: 'azurerm'
-              command: 'init'
-              workingDirectory: '$(workdir)'
-              backendServiceArm: 'satishranjanwindowshost'
-              backendAzureRmResourceGroupName: 'satishrg'
-              backendAzureRmStorageAccountName: 'satishranstorage'
-              backendAzureRmContainerName: 'satishcontainer'
-              backendAzureRmKey: 'terraform.tfstate'
+  # - stage: terraformplanfordev
+  #   dependsOn: terraforminstallationandinitfordev
+  #   displayName: Terraform Plan
+  #   jobs:
+  #    - job: terraformplan
+  #      displayName: Terraform plan
+  #      steps:
+  #         - task: TerraformTaskV4@4
+  #           inputs:
+  #             provider: 'azurerm'
+  #             command: 'init'
+  #             workingDirectory: '$(workdir)'
+  #             backendServiceArm: 'satishranjanwindowshost'
+  #             backendAzureRmResourceGroupName: 'satishrg'
+  #             backendAzureRmStorageAccountName: 'satishranstorage'
+  #             backendAzureRmContainerName: 'satishcontainer'
+  #             backendAzureRmKey: 'terraform.tfstate'
 
-          - task: TerraformTaskV4@4
-            inputs:
-              provider: 'azurerm'
-              command: 'plan'
-              workingDirectory: '$(workdir)'
-              environmentServiceNameAzureRM: 'satishranjanwindowshost'              
+  #         - task: TerraformTaskV4@4
+  #           inputs:
+  #             provider: 'azurerm'
+  #             command: 'plan'
+  #             workingDirectory: '$(workdir)'
+  #             environmentServiceNameAzureRM: 'satishranjanwindowshost'              
