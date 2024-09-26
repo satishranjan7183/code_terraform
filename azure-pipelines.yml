@@ -6,6 +6,7 @@ trigger:
      - master
 
 pool: 
+ name: satishpool
  demands:
   - agent.name -equals ranjanofficeagent
 
