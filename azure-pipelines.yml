@@ -19,6 +19,7 @@ parameters:
       - prod 
 
 stages:
+# Terraform Installation and Initialization for Dev Environment
   - stage: terraforminstallandinitfordev
     displayName: Terraform Installation and Initialization for Dev Environment
     jobs:
@@ -42,8 +43,33 @@ stages:
               backendAzureRmStorageAccountName: 'satishranstorage'
               backendAzureRmContainerName: 'satishcontainer'
               backendAzureRmKey: 'terraform.tfstate'
-  - stage: tfplanfordev
-    dependsOn: terraforminstallandinitfordev
+
+  # Terraform Installation and Initialization for Prod Environment
+  - stage: terraforminstallandinitforprod
+    displayName: Terraform Installation and Initialization for Prod Environment
+    jobs:
+      - job: terraforminstallprod
+        displayName: Terraform Install for Prod
+        steps:
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: 'latest'
+      - job: terraforminitprod
+        displayName: Terraform Initialization for Prod
+        dependsOn: terraforminstallprod
+        steps:
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/environment/prod'
+              backendServiceArm: 'satishranjanwindowshost'
+              backendAzureRmResourceGroupName: 'satishrg'
+              backendAzureRmStorageAccountName: 'satishranstorage'
+              backendAzureRmContainerName: 'satishcontainer'
+              backendAzureRmKey: 'terraform.tfstate'
+  - stage: tfplanforprod
+    dependsOn: terraforminstallandinitforprod
     displayName: Terraform Plan
     jobs:
      - job: terraformplan
@@ -53,7 +79,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/environment/dev'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/environment/prod'
               backendServiceArm: 'satishranjanwindowshost'
               backendAzureRmResourceGroupName: 'satishrg'
               backendAzureRmStorageAccountName: 'satishranstorage'
@@ -64,7 +90,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'plan'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/environment/dev'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/environment/prod'
               environmentServiceNameAzureRM: 'satishranjanwindowshost'
   - stage: ManualApproval
     displayName: Manual Approval Needed
