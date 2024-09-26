@@ -23,7 +23,7 @@ variables:
 
 stages:
   - stage: terraforminstallandinit${{parameters.environment}}
-    displayName: Terraform Installation and Initialization for ${{parameters.environment}} Environment
+    displayName: Terraform Installation and Initialization for ${{parameters.environment}}
     jobs:
       - job: terraforminstall
         displayName: Terraform Install
