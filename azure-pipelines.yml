@@ -1,7 +1,6 @@
 name: Production Infra Setup in Terraform
 
-trigger:
-- master
+trigger: none
 
 pool: 
  demands:
