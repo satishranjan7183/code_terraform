@@ -70,8 +70,8 @@ stages:
               command: 'plan'
               workingDirectory: '$(workdir)/${{parameters.environment}}'
               environmentServiceNameAzureRM: 'satishranjanwindowshost'
-  - stage: ManualApproval
-    displayName: Manual Approval Needed
+  - stage: ManualApproval${{parameters.environment}}
+    displayName: Manual Approval Needed for ${{parameters.environment}}
     jobs: 
     - job: ManualApprovalJob
       displayName: Manual Approval Job
@@ -81,6 +81,31 @@ stages:
         inputs:
           notifyUsers: 'satish.ranjan7183@gmail.com'
           instructions: 'Please validate the plan and continue'
+
+  - stage: terraformplan${{parameters.environment}}
+    dependsOn: ManualApproval${{parameters.environment}}
+    displayName: Terraform Plan
+    jobs:
+     - job: terraformplan
+       displayName: Terraform plan
+       steps:
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(workdir)/${{parameters.environment}}'
+              backendServiceArm: 'satishranjanwindowshost'
+              backendAzureRmResourceGroupName: 'satishrg'
+              backendAzureRmStorageAccountName: 'satishranstorage'
+              backendAzureRmContainerName: 'satishcontainer'
+              backendAzureRmKey: 'terraform.tfstate'
+
+  #         - task: TerraformTaskV4@4
+  #           inputs:
+  #             provider: 'azurerm'
+  #             command: 'plan'
+  #             workingDirectory: '$(workdir)'
+  #             environmentServiceNameAzureRM: 'satishranjanwindowshost'              
 
   # - stage: terraforminstallationandinitforprod
   #   displayName: Terraform Installation and Initialization
