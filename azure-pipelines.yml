@@ -42,41 +42,41 @@ stages:
               backendAzureRmStorageAccountName: 'satishranstorage'
               backendAzureRmContainerName: 'satishcontainer'
               backendAzureRmKey: 'terraform.tfstate'
-  # - stage: tfplanfordev
-  #   dependsOn: terraforminstallandinitfordev
-  #   displayName: Terraform Plan
-  #   jobs:
-  #    - job: terraformplan
-  #      displayName: Terraform plan
-  #      steps:
-  #         - task: TerraformTaskV4@4
-  #           inputs:
-  #             provider: 'azurerm'
-  #             command: 'init'
-  #             workingDirectory: '$(System.DefaultWorkingDirectory)/environment/dev'
-  #             backendServiceArm: 'satishranjanwindowshost'
-  #             backendAzureRmResourceGroupName: 'satishrg'
-  #             backendAzureRmStorageAccountName: 'satishranstorage'
-  #             backendAzureRmContainerName: 'satishcontainer'
-  #             backendAzureRmKey: 'terraform.tfstate'
+  - stage: tfplanfordev
+    dependsOn: terraforminstallandinitfordev
+    displayName: Terraform Plan
+    jobs:
+     - job: terraformplan
+       displayName: Terraform plan
+       steps:
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/environment/dev'
+              backendServiceArm: 'satishranjanwindowshost'
+              backendAzureRmResourceGroupName: 'satishrg'
+              backendAzureRmStorageAccountName: 'satishranstorage'
+              backendAzureRmContainerName: 'satishcontainer'
+              backendAzureRmKey: 'terraform.tfstate'
 
-  #         - task: TerraformTaskV4@4
-  #           inputs:
-  #             provider: 'azurerm'
-  #             command: 'plan'
-  #             workingDirectory: '$(System.DefaultWorkingDirectory)/environment/dev'
-  #             environmentServiceNameAzureRM: 'satishranjanwindowshost'
-  # - stage: ManualApproval
-  #   displayName: Manual Approval Needed
-  #   jobs: 
-  #   - job: ManualApprovalJob
-  #     displayName: Manual Approval Job
-  #     pool: server
-  #     steps:
-  #     - task: ManualValidation@1
-  #       inputs:
-  #         notifyUsers: 'satish.ranjan7183@gmail.com'
-  #         instructions: 'Please validate the plan and continue'
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/environment/dev'
+              environmentServiceNameAzureRM: 'satishranjanwindowshost'
+  - stage: ManualApproval
+    displayName: Manual Approval Needed
+    jobs: 
+    - job: ManualApprovalJob
+      displayName: Manual Approval Job
+      pool: server
+      steps:
+      - task: ManualValidation@1
+        inputs:
+          notifyUsers: 'satish.ranjan7183@gmail.com'
+          instructions: 'Please validate the plan and continue'
 
   # - stage: terraforminstallationandinitforprod
   #   displayName: Terraform Installation and Initialization
