@@ -103,7 +103,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'plan'
-              workingDirectory: '$(workdir)'
+              workingDirectory: '$(workdir)/${{parameters.environment}}'
               environmentServiceNameAzureRM: 'satishranjanwindowshost'              
           - task: TerraformTaskV4@4
             inputs:
