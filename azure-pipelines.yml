@@ -16,6 +16,7 @@ parameters:
     type: string
     values:
       - 'dev'
+      - 'test'
       - 'prod' 
 
 variables:
