@@ -15,64 +15,39 @@ parameters:
     default: dev
     type: string
     values:
-      - dev
-      - prod 
+      - 'dev'
+      - 'prod' 
 
 variables:
  - group: workdirvg
 
 stages:
-# Terraform Installation and Initialization for Dev Environment
-  - stage: terraforminstallandinitfordev
+  - stage: terraforminstallandinit
     displayName: Terraform Installation and Initialization for Dev Environment
     jobs:
-      - job: terraforminstalldev
-        displayName: Terraform Install for Dev
+      - job: terraforminstall
+        displayName: Terraform Install
         steps:
           - task: TerraformInstaller@1
             inputs:
               terraformVersion: 'latest'
-      - job: terraforminitdev
-        displayName: Terraform Initialization for Dev
-        dependsOn: terraforminstalldev
+      - job: terraforminit
+        displayName: Terraform Initialization
+        dependsOn: terraforminstall
         steps:
           - task: TerraformTaskV4@4
             inputs:
               provider: 'azurerm'
               command: 'init'
-              workingDirectory: '$(workdir)/dev'
+              workingDirectory: '$(workdir)/${{parameters.environment}}'
               backendServiceArm: 'satishranjanwindowshost'
               backendAzureRmResourceGroupName: 'satishrg'
               backendAzureRmStorageAccountName: 'satishranstorage'
               backendAzureRmContainerName: 'satishcontainer'
               backendAzureRmKey: 'terraform.tfstate'
 
-  # Terraform Installation and Initialization for Prod Environment
-  - stage: terraforminstallandinitforprod
-    displayName: Terraform Installation and Initialization for Prod Environment
-    jobs:
-      - job: terraforminstallprod
-        displayName: Terraform Install for Prod
-        steps:
-          - task: TerraformInstaller@1
-            inputs:
-              terraformVersion: 'latest'
-      - job: terraforminitprod
-        displayName: Terraform Initialization for Prod
-        dependsOn: terraforminstallprod
-        steps:
-          - task: TerraformTaskV4@4
-            inputs:
-              provider: 'azurerm'
-              command: 'init'
-              workingDirectory: '$(workdir)/prod'
-              backendServiceArm: 'satishranjanwindowshost'
-              backendAzureRmResourceGroupName: 'satishrg'
-              backendAzureRmStorageAccountName: 'satishranstorage'
-              backendAzureRmContainerName: 'satishcontainer'
-              backendAzureRmKey: 'terraform.tfstate'
-  - stage: tfplanforprod
-    dependsOn: terraforminstallandinitforprod
+  - stage: tfplan
+    dependsOn: terraforminstallandinit
     displayName: Terraform Plan
     jobs:
      - job: terraformplan
@@ -82,7 +57,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
-              workingDirectory: '$(workdir)/prod'
+              workingDirectory: '$(workdir)/${{parameters.environment}}'
               backendServiceArm: 'satishranjanwindowshost'
               backendAzureRmResourceGroupName: 'satishrg'
               backendAzureRmStorageAccountName: 'satishranstorage'
@@ -93,7 +68,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'plan'
-              workingDirectory: '$(workdir)/prod'
+              workingDirectory: '$(workdir)/${{parameters.environment}}'
               environmentServiceNameAzureRM: 'satishranjanwindowshost'
   - stage: ManualApproval
     displayName: Manual Approval Needed
