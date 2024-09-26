@@ -26,6 +26,7 @@ stages:
               terraformVersion: 'latest'
       - job: terraforminitdev
         displayName: Terraform Initialization for Dev
+        dependsOn: terraforminstalldev
         steps:
           - task: TerraformTaskV4@4
             inputs:
