@@ -18,6 +18,9 @@ parameters:
       - dev
       - prod 
 
+variables:
+ - group: workdirvg
+
 stages:
 # Terraform Installation and Initialization for Dev Environment
   - stage: terraforminstallandinitfordev
@@ -37,7 +40,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/environment/dev'
+              workingDirectory: '$(workdir)/dev'
               backendServiceArm: 'satishranjanwindowshost'
               backendAzureRmResourceGroupName: 'satishrg'
               backendAzureRmStorageAccountName: 'satishranstorage'
@@ -62,7 +65,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/environment/prod'
+              workingDirectory: '$(workdir)/prod'
               backendServiceArm: 'satishranjanwindowshost'
               backendAzureRmResourceGroupName: 'satishrg'
               backendAzureRmStorageAccountName: 'satishranstorage'
@@ -79,7 +82,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/environment/prod'
+              workingDirectory: '$(workdir)/prod'
               backendServiceArm: 'satishranjanwindowshost'
               backendAzureRmResourceGroupName: 'satishrg'
               backendAzureRmStorageAccountName: 'satishranstorage'
@@ -90,7 +93,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'plan'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/environment/prod'
+              workingDirectory: '$(workdir)/prod'
               environmentServiceNameAzureRM: 'satishranjanwindowshost'
   - stage: ManualApproval
     displayName: Manual Approval Needed
