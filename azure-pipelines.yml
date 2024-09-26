@@ -84,7 +84,7 @@ stages:
 
   - stage: terraformplan${{parameters.environment}}
     dependsOn: ManualApproval${{parameters.environment}}
-    displayName: Terraform Plan
+    displayName: Terraform Plan for ${{parameters.environment}}
     jobs:
      - job: terraformplan
        displayName: Terraform plan
