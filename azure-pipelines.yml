@@ -46,7 +46,7 @@ stages:
               backendAzureRmContainerName: 'satishcontainer'
               backendAzureRmKey: 'terraform.tfstate'
 
-  - stage: tfplan
+  - stage: tfplan${{parameters.environment}}
     dependsOn: terraforminstallandinit${{parameters.environment}}
     displayName: Terraform Plan
     jobs:
