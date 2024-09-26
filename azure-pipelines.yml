@@ -22,8 +22,8 @@ variables:
  - group: workdirvg
 
 stages:
-  - stage: terraforminstallandinit
-    displayName: Terraform Installation and Initialization for Dev Environment
+  - stage: terraforminstallandinit${{parameters.environment}}
+    displayName: Terraform Installation and Initialization for ${{parameters.environment}} Environment
     jobs:
       - job: terraforminstall
         displayName: Terraform Install
@@ -47,7 +47,7 @@ stages:
               backendAzureRmKey: 'terraform.tfstate'
 
   - stage: tfplan
-    dependsOn: terraforminstallandinit
+    dependsOn: terraforminstallandinit${{parameters.environment}}
     displayName: Terraform Plan
     jobs:
      - job: terraformplan
