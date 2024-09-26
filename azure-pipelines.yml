@@ -12,7 +12,7 @@ pool:
 
 parameters:
   - name: environment
-    default: dev
+    default: 'dev'
     type: string
     values:
       - 'dev'
