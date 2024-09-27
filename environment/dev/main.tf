@@ -19,7 +19,7 @@ module "strmodule" {
   depends_on = [module.rgmodule]
 }
 
-# Call Child module for Container
+# Call Child-module for Container
 module "strcontmodule" {
   source        = "../../module/3a_container"
   varstrcontmap = var.varstrcontmapmodule
