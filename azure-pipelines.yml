@@ -47,6 +47,7 @@ stages:
               backendAzureRmContainerName: 'satishcontainer'
               backendAzureRmKey: 'terraform.tfstate'
 
+# Terraform Plan Stage
   - stage: tfplan${{parameters.environment}}
     dependsOn: terraforminstallandinit${{parameters.environment}}
     displayName: Terraform Plan for ${{parameters.environment}}
@@ -71,6 +72,7 @@ stages:
               command: 'plan'
               workingDirectory: '$(workdir)/${{parameters.environment}}'
               environmentServiceNameAzureRM: 'satishranjanwindowshost'
+ # Manual Approval Stage before Apply
   - stage: ManualApproval${{parameters.environment}}
     displayName: Manual Approval Needed for ${{parameters.environment}}
     jobs: 
@@ -82,7 +84,7 @@ stages:
         inputs:
           notifyUsers: 'satish.ranjan7183@gmail.com'
           instructions: 'Please validate the plan and continue'
-
+# Apply Stage Once Appoval Done
   - stage: terraformplan${{parameters.environment}}
     dependsOn: ManualApproval${{parameters.environment}}
     displayName: Terraform Apply for ${{parameters.environment}}
