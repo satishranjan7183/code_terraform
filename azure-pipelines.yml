@@ -22,6 +22,7 @@ variables:
  - group: workdirvg
 
 stages:
+# Terraform Installation and Initialization Stage
   - stage: terraforminstallandinit${{parameters.environment}}
     displayName: Terraform Installation and Initialization for ${{parameters.environment}}
     jobs:
