@@ -1,6 +1,7 @@
 name: Production Infra Setup in Terraform
 
-trigger: none
+trigger: 
+ - master
 
 pool: 
  name: satishpool
