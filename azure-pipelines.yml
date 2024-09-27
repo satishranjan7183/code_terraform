@@ -8,7 +8,7 @@ trigger:
 pool: 
  name: satishpool
  demands:
-  - agent.name -equals ranjanofficeagent
+  - agent.name -equals satishagent
 
 parameters:
   - name: environment
