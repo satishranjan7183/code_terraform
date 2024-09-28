@@ -20,6 +20,26 @@ variables:
  - group: workdirvg
 
 stages:
+# Implement SonarQube to Scane code quality
+  - stage: codescan
+    displayName: Sonarqube code Scan
+    jobs:
+     - job: 
+       steps:
+         - task: SonarQubePrepare@6
+           inputs:
+             SonarQube: 'satishsonarqubeapp'
+             scannerMode: 'CLI'
+             configMode: 'manual'
+             cliProjectKey: 'satishsonarqube'
+             cliProjectName: 'satishsonarqube'
+             cliSources: '.'
+         - task: SonarQubeAnalyze@6
+           inputs:
+             jdkversion: 'JAVA_HOME_17_X64'
+         - task: SonarQubePublish@6
+           inputs:
+             pollingTimeoutSec: '300'
 # Terraform Installation and Initialization Stage
   - stage: terraforminstallandinit${{parameters.environment}}
     displayName: Terraform Installation and Initialization for ${{parameters.environment}}
