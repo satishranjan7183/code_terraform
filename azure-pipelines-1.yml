@@ -2,8 +2,8 @@ resources:
   repositories:
     - repository: common
       type: git
-      ref: master
-      name: satishranjan7183/code_terraform
+      ref: refs/heads/master
+      name: code_terraform
 
 variables:
   ref: $[ resources.repositories.common.master ]
