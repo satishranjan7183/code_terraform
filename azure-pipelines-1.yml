@@ -1,0 +1,23 @@
+resources:
+  repositories:
+    - repository: common
+      type: git
+      ref: master
+      name: satishranjan7183/code_terraform
+
+variables:
+  ref: $[ resources.repositories.common.master ]
+  name: $[ resources.repositories.common.code_terraform ]
+  id: $[ resources.repositories.common.id ]
+  type: $[ resources.repositories.common.type ]
+  url: $[ resources.repositories.common.url ]
+  version: $[ resources.repositories.common.version ]
+
+steps:
+- bash: |
+    echo "name = $(name)"
+    echo "ref = $(ref)"
+    echo "id = $(id)"
+    echo "type = $(type)"
+    echo "url = $(url)"
+    echo "version = $(version)"
